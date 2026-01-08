@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Quiz Generation Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+        }
+        .test-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .skill-card {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .skill-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .skill-name {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .difficulty {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #5a67d8;
+        }
+        button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+        .results {
+            margin-top: 30px;
+        }
+        .quiz-result {
+            background: #f7fafc;
+            border-left: 4px solid #48bb78;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .quiz-result.error {
+            border-left-color: #f56565;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .context {
+            background: #edf2f7;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin: 5px 0;
+        }
+        .correct {
+            color: #48bb78;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: #718096;
+        }
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Enhanced Quiz Generation Test Suite</h1>
+        <p>Test the comprehensive skill question generation system with various domains including cooking.</p>
+        
+        <div class="test-controls">
+            <div class="skill-card">
+                <div class="skill-name">🍳 Cooking</div>
+                <div class="difficulty">Intermediate</div>
+                <button onclick="testQuiz('cooking', 'intermediate')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">🧁 Baking</div>
+                <div class="difficulty">Advanced</div>
+                <button onclick="testQuiz('baking', 'advanced')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">👨‍🍳 Culinary Arts</div>
+                <div class="difficulty">Expert</div>
+                <button onclick="testQuiz('culinary arts', 'expert')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">💻 JavaScript</div>
+                <div class="difficulty">Intermediate</div>
+                <button onclick="testQuiz('javascript', 'intermediate')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">⚛️ React</div>
+                <div class="difficulty">Advanced</div>
+                <button onclick="testQuiz('react', 'advanced')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">🧘 Yoga</div>
+                <div class="difficulty">Beginner</div>
+                <button onclick="testQuiz('yoga', 'beginner')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">🇪🇸 Spanish Language</div>
+                <div class="difficulty">Intermediate</div>
+                <button onclick="testQuiz('spanish language', 'intermediate')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">📈 Digital Marketing</div>
+                <div class="difficulty">Advanced</div>
+                <button onclick="testQuiz('digital marketing', 'advanced')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">🔨 Carpentry</div>
+                <div class="difficulty">Intermediate</div>
+                <button onclick="testQuiz('carpentry', 'intermediate')">Generate Quiz</button>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-name">🏀 Basketball</div>
+                <div class="difficulty">Expert</div>
+                <button onclick="testQuiz('basketball', 'expert')">Generate Quiz</button>
+            </div>
+        </div>
+        
+        <div class="results" id="results"></div>
+    </div>
+
+    <script type="module">
+        // Mock the Mistral service for testing
+        const mockMistralService = {
+            async generateQuiz(skillName, difficulty) {
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Domain detection logic
+                const detectSkillDomain = (skillName) => {
+                    const lowerSkill = skillName.toLowerCase();
+                    
+                    const domains = {
+                        cooking: ['cooking', 'baking', 'culinary', 'chef', 'food', 'recipe', 'kitchen'],
+                        technical: ['javascript', 'python', 'java', 'react', 'vue', 'angular', 'node'],
+                        creative: ['design', 'art', 'music', 'writing', 'content', 'creative'],
+                        business: ['management', 'marketing', 'sales', 'finance', 'strategy', 'digital marketing'],
+                        language: ['english', 'spanish', 'french', 'german', 'language', 'translation'],
+                        health: ['fitness', 'yoga', 'meditation', 'nutrition', 'diet', 'exercise'],
+                        trades: ['carpentry', 'plumbing', 'electrical', 'welding', 'mechanic'],
+                        sports: ['football', 'basketball', 'soccer', 'tennis', 'golf', 'swimming']
+                    };
+                    
+                    for (const [domain, keywords] of Object.entries(domains)) {
+                        if (keywords.some(keyword => lowerSkill.includes(keyword) || keyword.includes(lowerSkill))) {
+                            return domain;
+                        }
+                    }
+                    return 'general';
+                };
+                
+                const domain = detectSkillDomain(skillName);
+                
+                // Generate sample questions based on domain
+                const sampleQuestions = {
+                    cooking: {
+                        intermediate: [
+                            {
+                                question: "What is the ideal internal temperature for cooking chicken breast to ensure it's safe but still moist?",
+                                codeSnippet: "Temperature Guide:\n- Chicken Breast: 165°F (74°C)\n- Chicken Thigh: 175°F (80°C)\n- Whole Chicken: 165°F (74°C)",
+                                options: ["145°F (63°C)", "155°F (68°C)", "165°F (74°C)", "175°F (80°C)"],
+                                correctAnswerIndex: 2
+                            },
+                            {
+                                question: "Which cooking method uses dry heat and is ideal for tender cuts of meat?",
+                                codeSnippet: "Cooking Methods:\n- Roasting: Dry heat, oven\n- Braising: Moist heat, covered\n- Grilling: Direct heat, open flame",
+                                options: ["Boiling", "Braising", "Roasting", "Steaming"],
+                                correctAnswerIndex: 2
+                            },
+                            {
+                                question: "What happens when you add acid to milk when making cheese?",
+                                codeSnippet: "Chemistry of Cheese Making:\nAcid + Milk Proteins = Curds\nLiquid separated = Whey",
+                                options: ["Milk spoils", "Proteins denature and form curds", "Milk becomes sweeter", "Nothing happens"],
+                                correctAnswerIndex: 1
+                            },
+                            {
+                                question: "Which knife is best for precision tasks like peeling and trimming small vegetables?",
+                                codeSnippet: "Kitchen Knife Types:\n- Chef's Knife: 8-10 inch, all-purpose\n- Paring Knife: 3-4 inch, precision\n- Bread Knife: Serrated, for bread",
+                                options: ["Chef's knife", "Bread knife", "Paring knife", "Cleaver"],
+                                correctAnswerIndex: 2
+                            },
+                            {
+                                question: "What is the Maillard reaction and why is it important in cooking?",
+                                codeSnippet: "Maillard Reaction:\nAmino Acids + Reducing Sugars + Heat\n= Brown Color + Complex Flavors",
+                                options: ["Food preservation method", "Browning reaction that creates flavor", "Cooking technique for vegetables", "Way to tenderize meat"],
+                                correctAnswerIndex: 1
+                            }
+                        ]
+                    },
+                    technical: {
+                        intermediate: [
+                            {
+                                question: "What is the output of this JavaScript code considering hoisting?",
+                                codeSnippet: "console.log(myVar);\nvar myVar = 'hello';\nconsole.log(myVar);",
+                                options: ["hello, hello", "undefined, hello", "ReferenceError, hello", "hello, undefined"],
+                                correctAnswerIndex: 1
+                            }
+                        ]
+                    },
+                    health: {
+                        beginner: [
+                            {
+                                question: "What is the primary benefit of the downward dog pose in yoga?",
+                                codeSnippet: "Downward Dog Benefits:\n- Stretches hamstrings and calves\n- Strengthens arms and shoulders\n- Calms the mind\n- Improves circulation",
+                                options: ["Only strengthens arms", "Full body stretch and strength building", "Only improves flexibility", "Primary breathing exercise"],
+                                correctAnswerIndex: 1
+                            }
+                        ]
+                    }
+                };
+                
+                const questions = sampleQuestions[domain]?.[difficulty] || [
+                    {
+                        question: `What is a fundamental concept in ${skillName}?`,
+                        codeSnippet: `Learning ${skillName} requires understanding core principles and practices.`,
+                        options: ["Basic principle", "Advanced technique", "Expert method", "Professional approach"],
+                        correctAnswerIndex: 0
+                    }
+                ];
+                
+                return questions;
+            }
+        };
+        
+        window.testQuiz = async function(skillName, difficulty) {
+            const resultsDiv = document.getElementById('results');
+            const button = event.target;
+            
+            // Disable button and show loading
+            button.disabled = true;
+            button.textContent = 'Generating...';
+            
+            // Add loading message
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading';
+            loadingDiv.textContent = `🔄 Generating ${difficulty} quiz for ${skillName}...`;
+            resultsDiv.appendChild(loadingDiv);
+            
+            try {
+                const questions = await mockMistralService.generateQuiz(skillName, difficulty);
+                
+                // Remove loading message
+                loadingDiv.remove();
+                
+                // Create result card
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'quiz-result';
+                
+                resultDiv.innerHTML = `
+                    <h3>✅ ${skillName} - ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} Quiz</h3>
+                    <p>Successfully generated ${questions.length} questions:</p>
+                    ${questions.map((q, index) => `
+                        <div class="question">
+                            <div class="question-text">Q${index + 1}: ${q.question}</div>
+                            ${q.codeSnippet ? `<div class="context">${q.codeSnippet}</div>` : ''}
+                            <div class="options">
+                                ${q.options.map((option, optIndex) => `
+                                    <div class="option ${optIndex === q.correctAnswerIndex ? 'correct' : 'incorrect'}">
+                                        ${String.fromCharCode(65 + optIndex)}. ${option}
+                                        ${optIndex === q.correctAnswerIndex ? ' ✅' : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                `;
+                
+                resultsDiv.appendChild(resultDiv);
+                
+            } catch (error) {
+                // Remove loading message
+                loadingDiv.remove();
+                
+                // Show error
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'quiz-result error';
+                errorDiv.innerHTML = `
+                    <h3>❌ Error generating quiz for ${skillName}</h3>
+                    <p>${error.message}</p>
+                `;
+                resultsDiv.appendChild(errorDiv);
+            } finally {
+                // Re-enable button
+                button.disabled = false;
+                button.textContent = 'Generate Quiz';
+            }
+        };
+    </script>
+</body>
+</html>
