@@ -6,6 +6,7 @@ import { dbService } from './services/dbService';
 import { Mail, Lock, User as UserIcon, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Logo } from './components/Logo';
 import { ChatBot } from './components/ChatBot';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 const Dashboard = lazy(() => import('./components/Dashboard').then(module => ({ default: module.Dashboard })));
 const SkillList = lazy(() => import('./components/SkillList').then(module => ({ default: module.SkillList })));
@@ -358,7 +359,7 @@ export default function App() {
              <Logo className="w-20 h-20 mb-2 shadow-2xl" />
           </div>
           <h1 className="text-3xl font-bold text-center text-white mb-2">Create Account</h1>
-          <p className="text-center text-slate-400 mb-8">Join the community of learners.</p>
+          <p className="text-center text-slate-400 mb-8">Join community of learners.</p>
           
           <form onSubmit={handleSignup} className="space-y-4">
              <div className="relative">
@@ -433,18 +434,20 @@ export default function App() {
   }
 
   return (
-    <>
-    <NotificationToast />
-    <Layout 
-      currentView={currentView} 
-      onNavigate={navigateToView} 
-      user={user}
-      onLogout={handleLogout}
-      unreadCount={unreadCount}
-    >
-      {renderView()}
-    </Layout>
-    <ChatBot isOpen={isChatBotOpen} onToggle={() => setIsChatBotOpen(!isChatBotOpen)} />
-    </>
+    <ThemeProvider>
+      <>
+      <NotificationToast />
+      <Layout 
+        currentView={currentView} 
+        onNavigate={navigateToView} 
+        user={user}
+        onLogout={handleLogout}
+        unreadCount={unreadCount}
+      >
+        {renderView()}
+      </Layout>
+      <ChatBot isOpen={isChatBotOpen} onToggle={() => setIsChatBotOpen(!isChatBotOpen)} />
+      </>
+    </ThemeProvider>
   );
 }

@@ -264,8 +264,8 @@ app.put('/api/users/:id', async (req, res) => {
        name = ?, email = ?, password = ?, avatar = ?, bio = ?, discord_link = ?, 
        skills_known = ?, skills_to_learn = ?, rating = ?, learning_hours = COALESCE(learning_hours, 0), 
        weekly_activity = COALESCE(weekly_activity, 0)`,
-      [id, user.name, user.email, user.password, user.avatar, user.bio, user.discordLink, skillsKnown, skillsToLearn, user.rating,
-       user.name, user.email, user.password, user.avatar, user.bio, user.discordLink, skillsKnown, skillsToLearn, user.rating]
+      [id, user.name, user.email, user.password, user.avatar, user.bio, user.discordLink || null, skillsKnown, skillsToLearn, user.rating,
+       user.name, user.email, user.password, user.avatar, user.bio, user.discordLink || null, skillsKnown, skillsToLearn, user.rating]
     );
 
     // Generate quizzes for new skills
