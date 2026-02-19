@@ -1,5 +1,11 @@
 import express from 'express';
-import cors from 'cors';
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://svai-frontend.vercel.app'
+  ],
+  credentials: true
+}));
 import { query } from './db.js';
 import crypto from 'crypto';
 import { generateQuiz } from './ai/mistralQuiz.js';
