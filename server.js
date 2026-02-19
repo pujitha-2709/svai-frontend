@@ -6,7 +6,7 @@ app.use(cors({
   ],
   credentials: true
 }));
-import { query } from './db.js';
+import pool from "./db.js";
 import crypto from 'crypto';
 import { generateQuiz } from './ai/mistralQuiz.js';
 import { suggestSkills, generateRoadmap } from './ai/mistralSkills.js';
