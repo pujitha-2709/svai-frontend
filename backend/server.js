@@ -1222,6 +1222,6 @@ app.get('/', (req, res) => {
   res.send('SkillVouch MySQL API is running');
 });
 
-app.listen(PORT, () => {
-  console.log(`MySQL backend listening on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`MySQL backend listening on port ${PORT}`);
 });

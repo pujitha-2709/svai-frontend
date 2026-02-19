@@ -1,7 +1,7 @@
 import { User, ExchangeRequest, Message, ExchangeFeedback } from '../types';
 import { suggestSkillsDirect, generateRoadmapDirect } from './mistralDirectService';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 // Helper to simulate delay for "real" feel (reduced for better performance)
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -260,7 +260,7 @@ export const apiService = {
       try {
         console.log(`Attempt ${retryCount + 1}: Generating quiz for ${skill} (${difficulty})`);
         
-        const response = await fetch('/api/quiz/generate', {
+        const response = await fetch(`${API_BASE_URL}/quiz/generate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ skill, difficulty })
